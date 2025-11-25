@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AddressDTO {
 
-    private int addressId;
+    private Long addressId;
     private String city;
     private String state;
     private int pinCode;

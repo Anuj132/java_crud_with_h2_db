@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class UserException {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String>handleGenericException(Exception ex){
-        return new ResponseEntity<>("something was wring" + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<CustomError>handleGenericException(Exception ex){
+        CustomError error = new CustomError(ex.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     // Handle specific exceptions (e.g., User not found)
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<String> handleUserNotFound(UserNotFoundException ex) {
-        return new ResponseEntity<>("User not found: " + ex.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<CustomError> handleUserNotFound(UserNotFoundException ex) {
+        CustomError error = new CustomError(ex.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 }
